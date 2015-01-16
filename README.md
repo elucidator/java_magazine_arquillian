@@ -4,7 +4,7 @@ Deze code is begeleidend aan het Artikel "Arquilian 101" in het Java Magazine.
 
 ##  Vereisten
 
-* De code is gaat er vanuit dat je JDK 8 en Maven 3 hebt.to run the application.
+* De code is gaat er vanuit dat je JDK 8 en Maven 3 hebt.
 
 ## Compileren en testen
 Zoals in het artikel vermeld wordt er gebruik gemaakt van Profiles.

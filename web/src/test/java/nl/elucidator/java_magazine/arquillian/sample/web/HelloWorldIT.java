@@ -32,11 +32,8 @@ public class HelloWorldIT {
 
     @Deployment
     public static Archive<?> createDeployment() {
-
-        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
+        return ShrinkWrap.create(WebArchive.class)
                 .addPackage(EEApplication.class.getPackage()).addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-        System.out.println("webArchive.toString(true) = " + webArchive.toString(true));
-        return webArchive;
     }
 
     @Before

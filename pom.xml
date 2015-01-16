@@ -9,6 +9,25 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Java Magazine, Arquillian 101</name>
+    <description>
+        Sample code for article in Java Magazine
+    </description>
+
+    <developers>
+        <developer>
+            <name>Pieter van der Meer</name>
+            <email>pieter_at_elucidator_nl</email>
+            <organizationUrl>http://elucidator.nl</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:elucidator/java_magazine_arquillian.git</connection>
+        <url>scm:git:git@github.com:elucidator/java_magazine_arquillian.git</url>
+        <developerConnection>scm:git:git@github.com:elucidator/java_magazine_arquillian.git</developerConnection>
+    </scm>
+
     <modules>
         <module>model</module>
         <module>business</module>
@@ -16,27 +35,49 @@
     </modules>
 
     <properties>
+        <!-- File encodings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Java Specifications -->
         <java.version>1.8</java.version>
         <version.javaee>7.0</version.javaee>
 
+        <!-- Arquillian version -->
         <version.arquillian_core>1.1.4.Final</version.arquillian_core>
 
+        <!-- Dependency versions -->
         <version.junit>4.11</version.junit>
         <version.hamcrest.core>1.3</version.hamcrest.core>
         <version.openjpa>2.3.0</version.openjpa>
         <version.mockito>1.9.5</version.mockito>
         <version.openejb>4.7.1</version.openejb>
 
+        <!-- Plugins -->
         <version.plugin.compiler>3.1</version.plugin.compiler>
         <version.plugin.failsafe>2.18.1</version.plugin.failsafe>
 
+        <!-- Default value, is explicitly set in profiles -->
         <skip.integration.tests>true</skip.integration.tests>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Application module dependencies -->
+            <dependency>
+                <groupId>nl.elucidator.java_magazine.arquillian</groupId>
+                <artifactId>model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- EE Dependencies -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${version.javaee}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- version management for Arquillian -->
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -44,31 +85,11 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${version.javaee}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.openjpa</groupId>
-                <artifactId>openjpa</artifactId>
-                <version>${version.openjpa}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${version.mockito}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <!-- Global test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -76,9 +97,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>${version.hamcrest.core}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${version.mockito}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -124,6 +145,7 @@
     </build>
 
     <profiles>
+        <!-- Profile for integration tests -->
         <profile>
             <id>with-integration</id>
             <properties>
@@ -149,6 +171,7 @@
             </build>
         </profile>
         <profile>
+            <!-- Profile for unit test only -->
             <id>unit</id>
             <properties>
                 <skip.integration.tests>true</skip.integration.tests>
@@ -160,6 +183,7 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${version.plugin.failsafe}</version>
                         <configuration>
+                            <!-- Skip Integration tests, which is the default -->
                             <skipITs>${skip.integration.tests}</skipITs>
                         </configuration>
                     </plugin>
